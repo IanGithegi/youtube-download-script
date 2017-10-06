@@ -5,9 +5,9 @@
 #vid_dir=$1
 file="/home/samuel/Music/Test_Videos/list.txt"
 
-mkdir Videos
+#mkdir Videos
 
-touch video-map.txt
+#touch video-map.txt
 
 echo "Reading the lines in $file"
 #while IFS= read -r line 
@@ -15,15 +15,13 @@ for line in $(cat $file)
 do
     video_id=$(youtube-dl --get-id "$line")
     echo Creating Folder :$video_id
-    mkdir "$video_id"
+    mkdir "$video_title"
     video_title=$(youtube-dl --get-title "$line")
-    
-    echo "$video_id=$video_title" >> video-map.txt
-    cd $video_id
-    thumbnail=$(youtube-dl --write-thumbnail $line)
+    #echo "$video_id=$video_title" >> video-map.txt
+    cd $video_title
     echo Downloading Video : "$video_title" 
     youtube-dl -f best $line
-    echo "{ \"Title\": \"$video_title\", \"Thumbnail\": \"$thumbnail\",\"Poster\":\"poster.jpg\", \"Content Type\": \"Show\", \"Content Provider\": \"Ted Talks\",  \"Content Licence\": \"Creative Commons licenses \",}" > metadata.json
+    echo "{ \"Title\": \"$video_title\", \"Thumbnail\": \"thumbnail.jpg\",\"Poster\":\"poster.jpg\", \"Content Type\": \"Show\", \"Content Provider\": \"Ted Talks\",  \"Content Licence\": \"Creative Commons licenses \",}" > metadata.json
     cd ..
     
 done <$file
